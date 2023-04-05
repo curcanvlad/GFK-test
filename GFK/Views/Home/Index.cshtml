@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Twitter Search</h1>
+    <form method="get" asp-controller="Home" asp-action="Index">
+        <input type="text" name="query" placeholder="Search" />
+        <label>
+            <input type="checkbox" name="onlyWithImages" />
+            Only results with images
+        </label>
+        <button type="submit">Search</button>
+    </form>
+
+    @if (ViewBag.Tweets != null)
+    {
+        <div class="tweet-container">
+            @foreach (var tweet in ViewBag.Tweets)
+            {
+                <div class="tweet">
+                    <h3>@tweet.CreatedBy.Name</h3>
+                    <p>@tweet.Text</p>
+                    @if (tweet.Media.Count > 0)
+                    {
+                     <img src="@tweet.Media[0].MediaURLHttps" alt="Image" />
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .tweet-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tweet {
+        width: 300px;
+        border: 1px solid #ccc;
+        margin: 10px;
+        padding: 10px;
+    }
+</style>
